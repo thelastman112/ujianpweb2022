@@ -23,4 +23,24 @@ class CobaController extends Controller
         Coba::create($request->all());
         return redirect('/coba');
     }
+
+    function edit($id)
+    {
+        $coba = Coba::find($id);
+        return view('coba_edit', ['coba' => $coba]);
+    }
+
+    function update(Request $request, $id)
+    {
+        $coba = Coba::find($id);
+        $coba->update($request->all());
+        return redirect()->route('coba.index');
+    }
+
+    function destroy($id)
+    {
+        $coba = Coba::find($id);
+        $coba->delete();
+        return redirect()->route('coba.index');
+    }
 }

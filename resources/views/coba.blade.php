@@ -19,7 +19,15 @@
 
     <ul>
         @foreach ($coba as $c)
-            <li>{{ $c->coba }}</li>
+            <li>
+                {{ $c->coba }}
+                <a href="{{ route('coba.edit', $c->id) }}">edit</a>
+                <form action="{{ route('coba.destroy', $c->id) }}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" value="hapus">
+                </form>
+            </li>
         @endforeach
     </ul>
 </body>
