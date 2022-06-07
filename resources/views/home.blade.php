@@ -14,14 +14,11 @@
                             </div>
                         @endif
 
-                        @guest
-                            You are not logged in.
-                        @endguest
                         @role('admin')
-                            Anda adalah admin
+                            <p>Anda berhasil login sebagai admin</p>
                         @endrole
                         @role('user')
-                            Anda adalah user
+                            <p>Anda berhasil login sebagai user</p>
                         @endrole
                     </div>
                 </div>
