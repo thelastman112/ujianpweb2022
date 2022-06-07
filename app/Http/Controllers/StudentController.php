@@ -72,7 +72,9 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        $student->update($request->all());
+        $student->name = $request->name;
+        $student->nim = $request->nim;
+        $student->save();
         return redirect()->route('students.index')->with('success', 'Data berhasil diubah');
     }
 
