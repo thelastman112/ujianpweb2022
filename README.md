@@ -1,12 +1,10 @@
-<h1 align="center">Gallery Sale 👋</h1>
+<h1 align="center">Pemrograman Web 2022</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-v0.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Dzyfhuba/pweb2022/blob/main/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
 </p>
-
-> Exhibition website, marketing and sales
 
 ## Install
 
