@@ -72,9 +72,7 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        $student->name = $request->name;
-        $student->nim = $request->nim;
-        $student->save();
+        $student->update($request->all());
         return redirect()->route('students.index')->with('success', 'Data berhasil diubah');
     }
 
@@ -87,6 +85,6 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route('students.index')->with('success', 'Data berhasil dihapus');
+        return response()->json(['success' => 'Data berhasil dihapus']);
     }
 }

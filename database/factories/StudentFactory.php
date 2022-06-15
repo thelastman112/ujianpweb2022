@@ -19,6 +19,9 @@ class StudentFactory extends Factory
         return [
             'name' => $this->faker->name,
             'nim' => $this->faker->unique()->numberBetween(200602001, 200602999),
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
+            'birth_date' => $this->faker->dateTimeBetween('-30 years', '-20 years'),
         ];
     }
 }

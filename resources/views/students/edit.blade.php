@@ -17,6 +17,21 @@
                     <input type="text" class="form-control" name="nim" id="nim" aria-describedby="nimId" placeholder="NIM"
                         value="{{ $student->nim }}">
                 </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" name="address" id="address" aria-describedby="addressId"
+                        placeholder="Address" value="{{ $student->address }}">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="phone" aria-describedby="phoneId"
+                        placeholder="Phone" value="{{ $student->phone }}">
+                </div>
+                <div class="mb-3">
+                    <label for="birth_date" class="form-label">Birth Date</label>
+                    <input type="text" class="form-control" name="birth_date" id="birth_date"
+                        aria-describedby="birth_dateId" placeholder="Birth Date" value="{{ $student->birth_date }}">
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </aside>
