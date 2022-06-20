@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Student;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -15,8 +17,14 @@ class StudentController extends Controller
      */
     public function index()
     {
+        // get users that not in students, and not in admins
+        $users = User::whereNotIn('id', function ($query) {
+            $query->select('user_id')->from('students');
+        })->whereNotIn('id', function ($query) {
+            $query->select('model_id')->from('model_has_roles');
+        })->get();
         $students = Student::orderBy('id', 'desc')->get();
-        return view('students.index', compact('students'));
+        return view('students.index', compact('students', 'users'));
     }
 
     /**
@@ -37,8 +45,40 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        $student = Student::create($request->all());
-        return redirect()->route('students.index')->with('success', 'Data berhasil ditambahkan');
+        // dd($request->all());
+        if ($request->isRegistered == 'on') {
+            $id = $request->user_id;
+            $user = User::find($id);
+
+            $student = Student::create([
+                'user_id' => $id,
+                'name' => $user->name,
+                'nim' => $request->nim,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'birth_date' => $request->birth_date,
+            ]);
+        } else {
+            $user = User::create([
+                'username' => $request->nim,
+                'name' => $request->name,
+                'email' => $request->nim . '@gmail.com',
+                'password' => Hash::make('12345678'),
+            ]);
+            $user->assignRole('student');
+            $id = $user->id;
+
+            $student = Student::create([
+                'user_id' => $user->id,
+                'nim' => $request->nim,
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'birth_date' => $request->birth_date,
+            ]);
+        }
+
+        return redirect('/')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -58,9 +98,10 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        return view('students.edit', compact('student'));
+        $student = Student::find($id);
+        return response()->json($student);
     }
 
     /**

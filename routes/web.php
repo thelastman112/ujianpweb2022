@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-
 Route::middleware(['auth', 'role:admin|user'])->group(function () {
-    Route::get('/coba', [CobaController::class, 'index'])->name('coba.index');
-
-    Route::post('/coba', [CobaController::class, 'store'])->name('coba.store');
+    Route::get('/', [StudentController::class, 'index']);
+    Route::get('/students/{id}', [StudentController::class, 'show']);
+    Route::post('/students', [StudentController::class, 'store']);
+    Route::get('/students/{id}/edit', [StudentController::class, 'edit']);
+    Route::put('/students/{id}', [StudentController::class, 'update']);
+    Route::delete('/students/{id}', [StudentController::class, 'destroy']);
 });
 
-Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/students', StudentController::class);
+// Route::resource('/students', StudentController::class);

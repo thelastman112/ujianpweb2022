@@ -14,8 +14,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="nim" class="form-label">NIM</label>
-                    <input type="text" class="form-control" name="nim" id="nim" aria-describedby="nimId" placeholder="NIM"
-                        value="{{ $student->nim }}">
+                    <input type="text" class="form-control" name="nim" id="nim" aria-describedby="nimId"
+                        placeholder="NIM" value="{{ $student->nim }}">
                 </div>
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
@@ -29,8 +29,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="birth_date" class="form-label">Birth Date</label>
-                    <input type="text" class="form-control" name="birth_date" id="birth_date"
-                        aria-describedby="birth_dateId" placeholder="Birth Date" value="{{ $student->birth_date }}">
+                    <input type="date" class="form-control" name="birth_date" id="birth_date"
+                        aria-describedby="birth_dateId" placeholder="Birth Date">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
