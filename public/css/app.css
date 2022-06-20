@@ -11332,3 +11332,7 @@ label.required:after {
 .is-loading {
   filter: blur(1em);
 }
+
+.form-control-plaintext:focus {
+  outline: none;
+}

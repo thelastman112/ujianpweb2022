@@ -1,5 +1,6 @@
 require('./bootstrap');
 require('./students');
+require('./home');
 
 const nav = document.querySelector('nav');
 

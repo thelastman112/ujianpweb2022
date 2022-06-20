@@ -37,7 +37,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        {{-- Nav Item --}}
+                        <li class="nav-item">
+                            <a class="nav-link{{ Request::path() == 'home' ? ' active' : '' }}"
+                                href="{{ url('/home') }}">
+                                {{ __('Home') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link{{ Request::path() == 'students' ? ' active' : '' }}"
+                                href="{{ url('/students') }}">
+                                {{ __('Students') }}
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
