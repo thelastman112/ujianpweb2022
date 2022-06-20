@@ -23,6 +23,9 @@ Route::middleware(['auth', 'role:admin|user'])->group(function () {
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/home', [AccountController::class, 'index']);
     Route::put('/home', [AccountController::class, 'update']);
+
+    // Criteria3
+    // add route for change password
 });
 
 

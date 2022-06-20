@@ -71,15 +71,17 @@
         </div>
         <div class="card my-3">
             <div class="card-body">
+                <h1 class="card-title">
+                    Change Your Password
+                </h1>
                 <form action="changepassword" method="post">
-                    {{-- Start Case
+                    {{-- Criteria1
                     # Input last password
                     # Input new password
                     # Input new password again
                     # Submit button
 
-                    # Don`t forget to add CSRF token
-                    End Case --}}
+                    # Don`t forget to add CSRF token --}}
                 </form>
             </div>
         </div>

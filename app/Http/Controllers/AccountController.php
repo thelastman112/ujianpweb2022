@@ -77,6 +77,9 @@ class AccountController extends Controller
         ]);
     }
 
+    // Criteria4
+    // add new function to update the password
+
     /**
      * Remove the specified resource from storage.
      *

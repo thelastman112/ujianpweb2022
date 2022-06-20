@@ -77,3 +77,6 @@ if (window.location.pathname === '/home') {
         cancelBtn.toggle();
     });
 }
+
+// Suggestion2
+// add any script for support your page
