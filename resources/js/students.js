@@ -79,11 +79,17 @@ editToggle.each(function() {
         });
 
         const editModal = document.getElementById('editModal');
+        editModal.querySelector('form#editStudentForm').setAttribute('data-id', dataId);
         editModal.querySelector('input[name="name"]').value = data.name;
         editModal.querySelector('input[name="nim"]').value = data.nim;
         editModal.querySelector('input[name="phone"]').value = data.phone;
         editModal.querySelector('input[name="address"]').value = data.address;
         editModal.querySelector('input[name="birth_date"]').value = data.birth_date;
+
+
+        editModal.addEventListener('shown.bs.modal', () => {
+            editModal.querySelector('input[name="name"]').focus();
+        });
 
         editModal.addEventListener('hide.bs.modal', e => {
             e.target.querySelector('form').reset();
@@ -151,6 +157,11 @@ $('form#addStudentForm').on('submit', async e => {
         $('#addStudentForm #userId').attr('disabled', true);
         $('#addStudentForm #name').attr('disabled', false);
 
+        if(dataObj.user_id){
+            // remove option [value="dataObj.user_id"]
+            $(`option[value="${dataObj.user_id}"]`).remove();
+        }
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${result.data.name}</td>
@@ -164,5 +175,64 @@ $('form#addStudentForm').on('submit', async e => {
             </td>
         `;
         $('#studentTable tbody').prepend(row);
+    }
+});
+
+const formToggle = $('button[data-bs-target="#collapseAddStudent"]');
+formToggle.on('click', (e) => {
+    const focusTo = $('form#addStudentForm');
+    focusTo.find('input[name="name"]').trigger('focus');
+});
+
+$('form#editStudentForm').on('submit', async e => {
+    e.preventDefault();
+
+    const data = $(e.target).serializeArray();
+    const id = $(e.target).data('id');
+
+    // map data to object
+    const dataObj = data.reduce((acc, cur) => {
+        acc[cur.name] = cur.value;
+        return acc;
+    });
+
+    dataObj._token = $('meta[name="csrf-token"]').attr('content');
+
+    // remove dataObj.value
+    delete dataObj.value;
+
+    const result = await new Promise((resolve, reject) => {
+        fetch(`/students/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify(dataObj)
+        }).then(response => {
+            if (response.status === 200) {
+                resolve(response.json());
+            } else {
+                reject(response.status);
+            }
+        }).catch(err => {
+            reject(err);
+        });
+    });
+
+    console.log(result);
+
+    if (result.status === 'success') {
+        const editModal = $('#editModal');
+        editModal.find('form').trigger('reset');
+        editModal.find('.btn-close').trigger('click');
+
+        swal('Success', 'Student updated successfully', 'success');
+        const row = $(`tr[data-id="${id}"]`);
+        row.find('td:nth-child(1)').text(dataObj.name);
+        row.find('td:nth-child(2)').text(dataObj.nim);
+        row.find('td:nth-child(3)').text(dataObj.address);
+        row.find('td:nth-child(4)').text(dataObj.phone);
+        row.find('td:nth-child(5)').text(dataObj.birth_date);
     }
 });

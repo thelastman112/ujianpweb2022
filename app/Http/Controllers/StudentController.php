@@ -115,10 +115,28 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStudentRequest $request, Student $student)
+    public function update(UpdateStudentRequest $request, $id)
     {
-        $student->update($request->all());
-        return redirect()->route('students.index')->with('success', 'Data berhasil diubah');
+        $student = Student::find($id);
+
+        $student->update([
+            'nim' => $request->nim,
+            'name' => $request->name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'birth_date' => $request->birth_date,
+        ]);
+
+        $user = User::find($student->user_id);
+        $user->update([
+            'name' => $request->name,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Student updated successfully',
+            'data' => $student,
+        ])->setStatusCode(200);
     }
 
     /**

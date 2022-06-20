@@ -80,7 +80,7 @@
                 </thead>
                 <tbody id="studentData">
                     @foreach ($students as $student)
-                        <tr>
+                        <tr data-id="{{ $student->id }}">
                             <td>{{ $student->name }}</td>
                             <td>{{ $student->nim }}</td>
                             <td>{{ $student->address }}</td>
@@ -106,7 +106,7 @@
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="#" method="post">
+                    <form method="post" id="editStudentForm">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editModalLabel">Modal title</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -133,7 +133,7 @@
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone</label>
                                 <input type="text" class="form-control" name="phone" id="phone"
-                                    aria-describedby="phoneId" placeholder="Phone" value="asd">
+                                    aria-describedby="phoneId" placeholder="Phone">
                             </div>
                             <div class="mb-3">
                                 <label for="birth_date" class="form-label">Birth Date</label>
