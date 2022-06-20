@@ -78,6 +78,14 @@ class StudentController extends Controller
             ]);
         }
 
+        // if process failed, redirect to response with error message
+        if (!$student) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create student',
+            ])->setStatusCode(400);
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Student created successfully',
@@ -105,6 +113,15 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
+
+        // if process failed, redirect to response with error message
+        if (!$student) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to find student',
+            ])->setStatusCode(400);
+        }
+
         return response()->json($student);
     }
 
@@ -132,6 +149,14 @@ class StudentController extends Controller
             'name' => $request->name,
         ]);
 
+        // if process failed, redirect to response with error message
+        if (!$student) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update student',
+            ])->setStatusCode(400);
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Student updated successfully',
@@ -145,8 +170,18 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
+        $student = Student::find($id);
+
+        // if process failed, redirect to response with error message
+        if (!$student) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to find student',
+            ])->setStatusCode(400);
+        }
+
         $student->delete();
         return response()->json(['success' => 'Data berhasil dihapus']);
     }

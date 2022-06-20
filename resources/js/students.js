@@ -147,34 +147,35 @@ $('form#addStudentForm').on('submit', async e => {
     console.log(result);
 
     if (result.status === 'success') {
-        const formToggle = $('button[data-bs-target="#collapseAddStudent"]');
+        window.location.reload();
+        // const formToggle = $('button[data-bs-target="#collapseAddStudent"]');
 
-        formToggle.trigger('click');
+        // formToggle.trigger('click');
 
-        swal('Success', 'Student added successfully', 'success');
-        $('#addStudentForm').trigger('reset');
-        $('#addStudentForm #isRegistered').prop('checked', false);
-        $('#addStudentForm #userId').attr('disabled', true);
-        $('#addStudentForm #name').attr('disabled', false);
+        // swal('Success', 'Student added successfully', 'success');
+        // $('#addStudentForm').trigger('reset');
+        // $('#addStudentForm #isRegistered').prop('checked', false);
+        // $('#addStudentForm #userId').attr('disabled', true);
+        // $('#addStudentForm #name').attr('disabled', false);
 
-        if(dataObj.user_id){
-            // remove option [value="dataObj.user_id"]
-            $(`option[value="${dataObj.user_id}"]`).remove();
-        }
+        // if(dataObj.user_id){
+        //     // remove option [value="dataObj.user_id"]
+        //     $(`option[value="${dataObj.user_id}"]`).remove();
+        // }
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${result.data.name}</td>
-            <td>${result.data.nim}</td>
-            <td>${result.data.address}</td>
-            <td>${result.data.phone}</td>
-            <td>${result.data.birth_date}</td>
-            <td>
-                <button class="btn btn-warning btn-sm" data-id="${result.data.id}" data-bs-target="#editModal" data-toggle="modal">Edit</button>
-                <button class="btn btn-danger btn-sm" data-id="${result.data.id}" data-bs-target="#deleteModal" data-toggle="modal">Delete</button>
-            </td>
-        `;
-        $('#studentTable tbody').prepend(row);
+        // const row = document.createElement('tr');
+        // row.innerHTML = `
+        //     <td>${result.data.name}</td>
+        //     <td>${result.data.nim}</td>
+        //     <td>${result.data.address}</td>
+        //     <td>${result.data.phone}</td>
+        //     <td>${result.data.birth_date}</td>
+        //     <td>
+        //         <button class="btn btn-warning btn-sm" data-id="${result.data.id}" data-bs-target="#editModal" data-toggle="modal">Edit</button>
+        //         <button class="btn btn-danger btn-sm" data-id="${result.data.id}" data-bs-target="#deleteModal" data-toggle="modal">Delete</button>
+        //     </td>
+        // `;
+        // $('#studentTable tbody').prepend(row);
     }
 });
 
