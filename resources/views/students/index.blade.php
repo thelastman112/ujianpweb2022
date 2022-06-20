@@ -7,14 +7,14 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        data-bs-target="#collapseAddStudent" aria-expanded="true" aria-controls="collapseAddStudent">
                         Tambahkan Mahasiswa Baru
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                <div id="collapseAddStudent" class="accordion-collapse collapse" aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <form action="students" method="post" id="addStudentForm">
+                        <form method="post" id="addStudentForm">
                             @csrf
                             {{-- is account has been created --}}
                             <div class="mb-3">
@@ -66,38 +66,41 @@
                 </div>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>NIM</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>Birth Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($students as $student)
-                    <tr>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->nim }}</td>
-                        <td>{{ $student->address }}</td>
-                        <td>{{ $student->phone }}</td>
-                        <td>{{ $student->birth_date }}</td>
-                        <td>
-                            {{-- <a href="students/{{ $student->id }}" class="btn btn-warning">Edit</a> --}}
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-id="{{ $student->id }}">
-                                Edit
-                            </button>
-                            <button type="button" class="btn btn-danger" id="students_delete"
-                                data-id="{{ $student->id }}">Delete</button>
-                        </td>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle" id="studentTable">
+                <thead>
+                    <tr class="text-center align-middle text-nowrap">
+                        <th>Nama</th>
+                        <th>NIM</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Birth Date</th>
+                        <th>Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody id="studentData">
+                    @foreach ($students as $student)
+                        <tr>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->nim }}</td>
+                            <td>{{ $student->address }}</td>
+                            <td>{{ $student->phone }}</td>
+                            <td>{{ $student->birth_date }}</td>
+                            <td>
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-warning btn-sm me-1" data-bs-toggle="modal"
+                                        data-bs-target="#editModal" data-id="{{ $student->id }}">
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm ms-1" id="students_delete"
+                                        data-id="{{ $student->id }}">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
         <!-- Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">

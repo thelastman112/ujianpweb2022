@@ -78,7 +78,11 @@ class StudentController extends Controller
             ]);
         }
 
-        return redirect('/')->with('success', 'Data berhasil ditambahkan');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Student created successfully',
+            'data' => $student,
+        ])->setStatusCode(201);
     }
 
     /**

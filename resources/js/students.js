@@ -79,6 +79,7 @@ editToggle.each(function() {
         });
 
         const editModal = document.getElementById('editModal');
+        editModal.querySelector('input[name="name"]').value = data.name;
         editModal.querySelector('input[name="nim"]').value = data.nim;
         editModal.querySelector('input[name="phone"]').value = data.phone;
         editModal.querySelector('input[name="address"]').value = data.address;
@@ -99,5 +100,69 @@ $('#addStudentForm #isRegistered').on('change', e => {
     } else {
         userId.attr('disabled', true);
         name.attr('disabled', false);
+    }
+});
+
+$('form#addStudentForm').on('submit', async e => {
+    e.preventDefault()
+    const data = $(e.target).serializeArray();
+
+    // map data to object
+    const dataObj = data.reduce((acc, cur) => {
+        acc[cur.name] = cur.value;
+        return acc;
+    });
+
+    dataObj._token = $('meta[name="csrf-token"]').attr('content');
+    // remove dataObj.value
+    delete dataObj.value;
+
+    // console.log(dataObj);
+
+    const result = await new Promise((resolve, reject) => {
+        fetch('/students', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            body: JSON.stringify(dataObj)
+        }).then(response => {
+            if (response.status === 201) {
+                resolve(response.json());
+            } else {
+                reject(response.status);
+            }
+        }).catch(err => {
+            reject(err);
+        });
+    });
+
+    console.log(result);
+
+    if (result.status === 'success') {
+        const formToggle = $('button[data-bs-target="#collapseAddStudent"]');
+
+        formToggle.trigger('click');
+
+        swal('Success', 'Student added successfully', 'success');
+        $('#addStudentForm').trigger('reset');
+        $('#addStudentForm #isRegistered').prop('checked', false);
+        $('#addStudentForm #userId').attr('disabled', true);
+        $('#addStudentForm #name').attr('disabled', false);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${result.data.name}</td>
+            <td>${result.data.nim}</td>
+            <td>${result.data.address}</td>
+            <td>${result.data.phone}</td>
+            <td>${result.data.birth_date}</td>
+            <td>
+                <button class="btn btn-warning btn-sm" data-id="${result.data.id}" data-bs-target="#editModal" data-toggle="modal">Edit</button>
+                <button class="btn btn-danger btn-sm" data-id="${result.data.id}" data-bs-target="#deleteModal" data-toggle="modal">Delete</button>
+            </td>
+        `;
+        $('#studentTable tbody').prepend(row);
     }
 });
