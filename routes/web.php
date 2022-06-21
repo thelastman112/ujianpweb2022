@@ -27,6 +27,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     // Criteria3
     // add route for change password
 });
+Route::put('/updatePassword', [AccountController::class, 'updatePassword']);
 
 
 

@@ -8,37 +8,37 @@ if (window.location.pathname === '/home') {
     const role = $('input[name="role"]').val()
     console.log(role);
 
-    const form = $('form');
+    const formAccount = $('form#putAccount');
 
     editBtn.on('click', e => {
         e.preventDefault();
-        form.find('input').prop('readonly', false);
-        form.find('input').removeClass('form-control-plaintext');
-        form.find('input').addClass('form-control');
+        formAccount.find('input').prop('readonly', false);
+        formAccount.find('input').removeClass('form-control-plaintext');
+        formAccount.find('input').addClass('form-control');
         editBtn.toggle();
         saveBtn.toggle();
         cancelBtn.toggle();
     });
 
-    form.on('submit', async e => {
+    formAccount.on('submit', async e => {
         e.preventDefault();
-        form.find('input').prop('readonly', true);
-        form.find('input').removeClass('form-control');
-        form.find('input').addClass('form-control-plaintext');
+        formAccount.find('input').prop('readonly', true);
+        formAccount.find('input').removeClass('form-control');
+        formAccount.find('input').addClass('form-control-plaintext');
         editBtn.toggle();
         saveBtn.toggle();
         cancelBtn.toggle();
 
         const data = {
-            id: form.find('input[name="id"]').val(),
-            user_id: form.find('input[name="user_id"]').val(),
-            name: form.find('input[name="name"]').val(),
-            username: form.find('input[name="username"]').val(),
-            nim: form.find('input[name="nim"]').val(),
-            email: form.find('input[name="email"]').val(),
-            phone: form.find('input[name="phone"]').val(),
-            address: form.find('input[name="address"]').val(),
-            birth_date: form.find('input[name="birth_date"]').val(),
+            id: formAccount.find('input[name="id"]').val(),
+            user_id: formAccount.find('input[name="user_id"]').val(),
+            name: formAccount.find('input[name="name"]').val(),
+            username: formAccount.find('input[name="username"]').val(),
+            nim: formAccount.find('input[name="nim"]').val(),
+            email: formAccount.find('input[name="email"]').val(),
+            phone: formAccount.find('input[name="phone"]').val(),
+            address: formAccount.find('input[name="address"]').val(),
+            birth_date: formAccount.find('input[name="birth_date"]').val(),
             _token: $('meta[name="csrf-token"]').attr('content'),
             _method: 'PUT',
         };
@@ -69,9 +69,9 @@ if (window.location.pathname === '/home') {
 
     cancelBtn.on('click', e => {
         e.preventDefault();
-        form.find('input').prop('readonly', true);
-        form.find('input').removeClass('form-control');
-        form.find('input').addClass('form-control-plaintext');
+        formAccount.find('input').prop('readonly', true);
+        formAccount.find('input').removeClass('form-control');
+        formAccount.find('input').addClass('form-control-plaintext');
         editBtn.toggle();
         saveBtn.toggle();
         cancelBtn.toggle();
@@ -80,3 +80,63 @@ if (window.location.pathname === '/home') {
 
 // Suggestion2
 // add any script for support your page
+const formPassword = $('form#changePassword');
+
+// formPassword.on('submit', async e=>{
+//     e.preventDefault();
+
+//     const data = {
+//         email: formPassword.find('input[name="email"]').val(),
+//         user_id: formPassword.find('input[name="user_id"]').val(),
+//         old_password: formPassword.find('input[name="old_password"]').val(),
+//         new_password: formPassword.find('input[name="new_password"]').val(),
+//         repeat_new_password: formPassword.find('input[name="repeat_new_password"]').val(),
+//         _token: $('meta[name="csrf-token"]').attr('content'),
+//         _method: 'PUT',
+//     }
+
+//     if (data.new_password != data.repeat_new_password){
+//         swal('Error', 'The passwords is not match', 'error');
+//         return;
+//     }
+
+//     const result = await new Promise((resolve, reject) => {
+//         fetch('/', {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             body: JSON.stringify(data)
+//         }).then(response => {
+//             if (response.status === 200) {
+//                 resolve(response.json());
+//             } else {
+//                 reject(response.status);
+//             }
+//         }).catch(err => {
+//             reject(err);
+//         });
+//     });
+//     console.log(result);
+// });
+
+formPassword.on('keyup', (e)=>{
+    e.preventDefault();
+
+    const data = {
+        // old_password: formAccount.find('input[name="old_password"]').val(),
+        new_password: formPassword.find('input[name="new_password"]').val(),
+        repeat_new_password: formPassword.find('input[name="repeat_new_password"]').val(),
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        _method: 'PUT',
+    };
+
+    if (data.new_password != data.repeat_new_password){
+        console.log('is not match');
+        $(e.target).find('button').attr('disabled', true);
+    } else {
+        console.log('is match');
+        $(e.target).find('button').attr('disabled', false);
+    }
+});

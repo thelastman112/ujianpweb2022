@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -81,6 +82,31 @@ class AccountController extends Controller
 
     // Criteria4
     // add new function to update the password
+    // Eloquent / raw SQL
+    public function updatePassword(Request $request)
+    {
+        $check = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+
+        if (!$check) {
+            // return response()->json([
+            //     'status' => 'failed',
+            //     'messange' => 'unauthorized',
+            //     'check' => $check,
+            // ])->setStatusCode(403);
+            return redirect('/home')->with('unauthorized');
+        }
+        $user = User::find($request->user_id);
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'check' => $check,
+        // ])->setStatusCode(201);
+        return redirect('/home');
+    }
 
     /**
      * Remove the specified resource from storage.

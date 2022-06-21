@@ -7,7 +7,7 @@
                 @if (!$student)
                     <p>You are not registered yet. Please contact our administrator to register.</p>
                 @else
-                    <form method="post">
+                    <form method="post" id="putAccount">
                         @csrf
                         {{-- edit toggle --}}
                         <input type="hidden" name="id" value="{{ $student->id }}">
@@ -77,7 +77,7 @@
                 <h1 class="card-title">
                     Change Your Password
                 </h1>
-                <form action="changepassword" method="post">
+                <form action="updatePassword" method="post" id="changePassword">
                     {{-- Criteria1
                     # Input last password
                     # Input new password
@@ -85,6 +85,31 @@
                     # Submit button
 
                     # Don`t forget to add CSRF token --}}
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="email" value="{{ $student->email }}">
+                    <input type="hidden" name="user_id" value="{{ $student->user_id }}">
+                    <div class="mb-3 row">
+                        <label for="old_password" class="col-sm-2 col-form-label text-nowrap">Old Password</label>
+                        <div class="col-sm-10 border-start">
+                            <input type="text" name="old_password" class="form-control" id="old_password">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="new_password" class="col-sm-2 col-form-label text-nowrap">New Password</label>
+                        <div class="col-sm-10 border-start">
+                            <input type="text" name="new_password" class="form-control" id="new_password">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="repeat_new_password" class="col-sm-2 col-form-label text-nowrap">Repeat New
+                            Password</label>
+                        <div class="col-sm-10 border-start">
+                            <input type="text" name="repeat_new_password" class="form-control"
+                                id="repeat_new_password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
             @endif
