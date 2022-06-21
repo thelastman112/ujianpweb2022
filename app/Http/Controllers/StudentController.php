@@ -20,9 +20,13 @@ class StudentController extends Controller
         // get users that not in students, and not in admins
         $users = User::whereNotIn('id', function ($query) {
             $query->select('user_id')->from('students');
-        })->whereNotIn('id', function ($query) {
-            $query->select('model_id')->from('model_has_roles');
         })->get();
+
+        // exclude if has role admin
+        $users = $users->filter(function ($user) {
+            return !$user->hasRole('admin');
+        });
+
         $students = Student::orderBy('id', 'desc')->get();
         return view('students.index', compact('students', 'users'));
     }
