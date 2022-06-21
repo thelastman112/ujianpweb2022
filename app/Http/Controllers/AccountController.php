@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -22,6 +23,7 @@ class AccountController extends Controller
             ->join('users', 'users.id', '=', 'students.user_id')
             ->select('students.*', 'users.username', 'users.email')
             ->first();
+
         return view('home', compact('student'));
     }
 

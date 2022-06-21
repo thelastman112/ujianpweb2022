@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->middleware('role_redirect');
 
-Route::middleware(['auth', 'role:admin|user'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/students', [StudentController::class, 'index']);
     Route::get('/students/{id}', [StudentController::class, 'show']);
     Route::post('/students', [StudentController::class, 'store']);
