@@ -7,7 +7,7 @@
                 @if (!$student)
                     <p>You are not registered yet. Please contact our administrator to register.</p>
                 @else
-                    <form method="post">
+                    <form method="post" id="editform">
                         @csrf
                         {{-- edit toggle --}}
                         <input type="hidden" name="id" value="{{ $student->id }}">
@@ -77,7 +77,7 @@
                 <h1 class="card-title">
                     Change Your Password
                 </h1>
-                <form action="changepassword" method="post">
+                <form action="changepassword" method="get">
                     {{-- Criteria1
                     # Input last password
                     # Input new password
@@ -85,6 +85,36 @@
                     # Submit button
 
                     # Don`t forget to add CSRF token --}}
+
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $student->id }}">
+                    <input type="hidden" name="user_id" value="{{ $student->user_id }}">
+                    <input type="hidden" name="role" value="student">
+                    <div class="mb-3 row">
+                        <label for="last_password" class="col-sm-2 col-form-label text-nowrap">Last Password</label>
+                        <div class="col-sm-10 border-start">
+                            <input type="password" name="last_password" class="form-control" id="last_password"
+                                placeholder="Enter your last password">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="new_password" class="col-sm-2 col-form-label text-nowrap">New Password</label>
+                        <div class="col-sm-10 border-start">
+                            <input type="password" name="new_password" class="form-control" id="new_password"
+                                placeholder="Enter your new password">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="new_password_again" class="col-sm-2 col-form-label text-nowrap">New Password Again</label>
+                        <div class="col-sm-10 border-start">
+                            <input type="password" name="new_password_again" class="form-control" id="new_password_again"
+                                placeholder="Enter your new password again">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <button type="submit" name="change_password" id="change_password" class="btn btn-primary">Change
+                            Password</button>
+                    </div>
                 </form>
             </div>
             @endif

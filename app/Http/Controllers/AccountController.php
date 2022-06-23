@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
@@ -33,10 +34,10 @@ class AccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
@@ -81,6 +82,18 @@ class AccountController extends Controller
 
     // Criteria4
     // add new function to update the password
+    public function updatePassword(Request $request)
+    {
+        $user = User::findOrFail($request->user_id);
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Password berhasil diubah'
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.
