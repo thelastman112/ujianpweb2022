@@ -29,6 +29,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::put('/change-password', [AccountController::class, 'updatePassword']);
 
 });
+Route::put('/updatePassword', [AccountController::class, 'updatePassword']);
 
 
 
