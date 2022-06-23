@@ -7,11 +7,7 @@
                 @if (!$student)
                     <p>You are not registered yet. Please contact our administrator to register.</p>
                 @else
-<<<<<<< HEAD
                     <form method="post" id="editform">
-=======
-                    <form method="post" id="putAccount">
->>>>>>> bd358fd3b06aa281ce952d817da5082e6790f06a
                         @csrf
                         {{-- edit toggle --}}
                         <input type="hidden" name="id" value="{{ $student->id }}">
@@ -81,11 +77,7 @@
                 <h1 class="card-title">
                     Change Your Password
                 </h1>
-<<<<<<< HEAD
                 <form action="changepassword" method="get">
-=======
-                <form action="updatePassword" method="post" id="changePassword">
->>>>>>> bd358fd3b06aa281ce952d817da5082e6790f06a
                     {{-- Criteria1
                     # Input last password
                     # Input new password
@@ -93,7 +85,6 @@
                     # Submit button
 
                     # Don`t forget to add CSRF token --}}
-<<<<<<< HEAD
 
                     @csrf
                     <input type="hidden" name="id" value="{{ $student->id }}">
@@ -104,22 +95,11 @@
                         <div class="col-sm-10 border-start">
                             <input type="password" name="last_password" class="form-control" id="last_password"
                                 placeholder="Enter your last password">
-=======
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="email" value="{{ $student->email }}">
-                    <input type="hidden" name="user_id" value="{{ $student->user_id }}">
-                    <div class="mb-3 row">
-                        <label for="old_password" class="col-sm-2 col-form-label text-nowrap">Old Password</label>
-                        <div class="col-sm-10 border-start">
-                            <input type="text" name="old_password" class="form-control" id="old_password">
->>>>>>> bd358fd3b06aa281ce952d817da5082e6790f06a
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="new_password" class="col-sm-2 col-form-label text-nowrap">New Password</label>
                         <div class="col-sm-10 border-start">
-<<<<<<< HEAD
                             <input type="password" name="new_password" class="form-control" id="new_password"
                                 placeholder="Enter your new password">
                         </div>
@@ -135,20 +115,6 @@
                         <button type="submit" name="change_password" id="change_password" class="btn btn-primary">Change
                             Password</button>
                     </div>
-=======
-                            <input type="text" name="new_password" class="form-control" id="new_password">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="repeat_new_password" class="col-sm-2 col-form-label text-nowrap">Repeat New
-                            Password</label>
-                        <div class="col-sm-10 border-start">
-                            <input type="text" name="repeat_new_password" class="form-control"
-                                id="repeat_new_password">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
->>>>>>> bd358fd3b06aa281ce952d817da5082e6790f06a
                 </form>
             </div>
             @endif
